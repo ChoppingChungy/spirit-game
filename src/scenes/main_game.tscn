@@ -1,5 +1,9 @@
 [gd_scene format=3 uid="uid://b2t704h6tdeim"]
 
+[ext_resource type="Script" uid="uid://tagx8gfmu3su" path="res://src/scripts/fight_mode.gd" id="1_r3nyt"]
+[ext_resource type="PackedScene" uid="uid://rfsqo1g5h5jc" path="res://src/scenes/watergun.tscn" id="1_wwqub"]
+[ext_resource type="PackedScene" uid="uid://co8xkftb3bsll" path="res://src/scenes/spirit_entity.tscn" id="3_m7syd"]
+
 [sub_resource type="GDScript" id="GDScript_s7wsd"]
 script/source = "extends Node
 "
@@ -8,3 +12,12 @@ script/source = "extends Node
 script = SubResource("GDScript_s7wsd")
 
 [node name="World" type="Node2D" parent="." unique_id=2064885806]
+
+[node name="FightMode" type="Node" parent="." unique_id=1919122805]
+script = ExtResource("1_r3nyt")
+increment = 100
+decrement = -100
+
+[node name="Flashlight" parent="FightMode" unique_id=102644220 instance=ExtResource("1_wwqub")]
+
+[node name="SpiritEntity" parent="FightMode" unique_id=355366846 instance=ExtResource("3_m7syd")]
