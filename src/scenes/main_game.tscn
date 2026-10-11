@@ -18,6 +18,29 @@ script = ExtResource("1_r3nyt")
 increment = 100
 decrement = -100
 
-[node name="Flashlight" parent="FightMode" unique_id=102644220 instance=ExtResource("1_wwqub")]
-
 [node name="SpiritEntity" parent="FightMode" unique_id=355366846 instance=ExtResource("3_m7syd")]
+position = Vector2(143, 88)
+
+[node name="Camera2D" type="Camera2D" parent="FightMode" unique_id=1983292856]
+position = Vector2(963, 540)
+
+[node name="WaterGun" parent="FightMode" unique_id=102644220 instance=ExtResource("1_wwqub")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="FightMode" unique_id=1629800187]
+
+[node name="Control" type="Control" parent="FightMode/CanvasLayer" unique_id=834117226]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="FightMode/CanvasLayer/Control" unique_id=1401821663]
+layout_mode = 0
+offset_left = 907.0
+offset_top = 118.0
+offset_right = 947.0
+offset_bottom = 158.0
+color = Color(0.7411765, 0.7411765, 0.7411765, 0.32156864)
+
+[connection signal="pressure_changed" from="FightMode" to="FightMode/SpiritEntity" method="_on_fight_mode_pressure_changed"]
+[connection signal="wet" from="FightMode/SpiritEntity" to="FightMode" method="_on_spirit_entity_wet"]

@@ -15,6 +15,15 @@ run/main_scene="uid://b2t704h6tdeim"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+move_list="*uid://crb2npkb1gn75"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [global_group]
 
 watergun=""
