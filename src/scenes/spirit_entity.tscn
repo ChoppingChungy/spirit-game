@@ -13,7 +13,7 @@ var speed = 500.0 # Base speed the ghost returns to
 var panic = 0.5 # How strongly pressure increases difficulty
 var accel_mult = 1.5 # How quickly speed returns to base speed
 
-var move_interval = 2 # base Average time between moves
+var move_interval = 0.25 # base Average time between moves
 var move_timer = 0 #live timer the ghost uses
 var turn_timer = 0#timer used to for turns
 var turn_speed = 0#speed for turns

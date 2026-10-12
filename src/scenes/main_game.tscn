@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://tagx8gfmu3su" path="res://src/scripts/fight_mode.gd" id="1_r3nyt"]
 [ext_resource type="PackedScene" uid="uid://rfsqo1g5h5jc" path="res://src/scenes/watergun.tscn" id="1_wwqub"]
 [ext_resource type="PackedScene" uid="uid://co8xkftb3bsll" path="res://src/scenes/spirit_entity.tscn" id="3_m7syd"]
+[ext_resource type="Texture2D" uid="uid://dsol5uxt1i2yq" path="res://Screenshot 2026-10-11 160132.png" id="4_m7syd"]
 
 [sub_resource type="GDScript" id="GDScript_s7wsd"]
 script/source = "extends Node
@@ -41,6 +42,14 @@ offset_top = 118.0
 offset_right = 947.0
 offset_bottom = 158.0
 color = Color(0.7411765, 0.7411765, 0.7411765, 0.32156864)
+
+[node name="TextureRect" type="TextureRect" parent="FightMode/CanvasLayer" unique_id=1400416890]
+offset_left = 1475.0001
+offset_top = 830.0
+offset_right = 1907.0001
+offset_bottom = 1245.0
+scale = Vector2(1.0268308, 0.5956021)
+texture = ExtResource("4_m7syd")
 
 [connection signal="pressure_changed" from="FightMode" to="FightMode/SpiritEntity" method="_on_fight_mode_pressure_changed"]
 [connection signal="wet" from="FightMode/SpiritEntity" to="FightMode" method="_on_spirit_entity_wet"]
