@@ -5,17 +5,89 @@ script/source = "extends Node2D
 @onready var hit_box: Area2D = $HitBox
 @onready var muzzle: Marker2D = $Muzzle
 @onready var stream: Line2D = $Stream
+@onready var water_chunks: Node2D = $WaterChunks
+const CHUNK = preload(\"res://water.png\")
+var chunks = []
 
-func update_water(mouse: Vector2):
+var chunk_spacing = 10.0
+var max_chunks = 200
+var chunk_speed = 1
+
+func update_chunks(mouse: Vector2, delta: float):
 	var start = muzzle.global_position
 	var end = mouse
-	var point_count = 20
 
 	var direction = (end - start).normalized()
 	var perpendicular = Vector2(-direction.y, direction.x)
 
-	var distance = start.distance_to(end)
-	var arc_strength = distance * 0.08
+	for chunk in chunks:
+		var sprite = chunk[\"sprite\"]
+		var t = chunk[\"t\"]
+
+		t += chunk_speed * delta
+
+		if t >= 1.0:
+			t -= 1.0
+
+			sprite.rotation = randf_range(0.0, TAU)
+			chunk[\"size_mult\"] = randf_range(0.6, 1)
+			chunk[\"offset\"] = randf_range(-8.0, 8.0)
+
+		chunk[\"t\"] = t
+
+		# Base position along stream
+		var point = start.lerp(end, t)
+
+		# Slight random sideways displacement
+		var offset_scale = lerp(1.0, 0.3, t)
+		point += perpendicular * chunk[\"offset\"] * offset_scale
+
+		sprite.global_position = point
+
+		# Perspective scaling
+		var size = lerp(1.5, 0.35, t)
+		size *= chunk[\"size_mult\"]
+
+		sprite.scale = Vector2.ONE * size
+		
+func update_chunk_count(mouse: Vector2):
+	var distance = muzzle.global_position.distance_to(mouse)
+	var desired_count = int(distance / chunk_spacing)
+
+	desired_count = clamp(desired_count, 5, max_chunks)
+
+	while chunks.size() < desired_count:
+		add_chunk()
+
+	while chunks.size() > desired_count:
+		remove_chunk()
+
+
+func add_chunk():
+	var sprite = Sprite2D.new()
+	sprite.texture = CHUNK
+	sprite.rotation = randf_range(0.0, TAU)
+
+	water_chunks.add_child(sprite)
+
+	chunks.append({
+		\"sprite\": sprite,
+		\"t\": randf(),
+		\"size_mult\": randf_range(0.8, 1.2),
+		\"offset\": randf_range(-8.0, 8.0)
+	})
+func remove_chunk():
+	var chunk = chunks.pop_back()
+	chunk[\"sprite\"].queue_free()
+	
+func update_stream(mouse: Vector2):
+	var start = muzzle.global_position
+	var end = mouse
+	var point_count = 16
+
+	var direction = (end - start).normalized()
+	var perpendicular = Vector2(-direction.y, direction.x)
+	var time = Time.get_ticks_msec() * 0.01
 
 	stream.clear_points()
 
@@ -23,36 +95,24 @@ func update_water(mouse: Vector2):
 		var t = float(i) / float(point_count - 1)
 		var point = start.lerp(end, t)
 
-		# Arc
-		var arc = sin(t * PI)
-		point.y -= arc * arc_strength
+		# Very subtle water movement
+		if i != 0 and i != point_count - 1:
+			var wave = sin(t * 20.0 + time) * 1.5
+			point += perpendicular * wave
 
-		# Small water oscillation
-		var time = Time.get_ticks_msec() * 0.012
-		var wave = (
-			sin(t * 20.0 + time) * 4.0
-			+ sin(t * 37.0 - time * 1.4) * 2.0
-		)
-
-		point += perpendicular * wave * t
-
-		stream.add_point(
-			stream.to_local(point)
-		)
+		stream.add_point(stream.to_local(point))
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
+func _ready():
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta):
 	var mouse = get_global_mouse_position()
+
 	hit_box.global_position = mouse
-	update_water(mouse)
-		
 
-
-	
+	update_chunk_count(mouse)
+	update_chunks(mouse, delta)
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_64jkt"]
@@ -78,3 +138,5 @@ shape = SubResource("CircleShape2D_64jkt")
 points = PackedVector2Array(849, -173)
 width_curve = SubResource("Curve_m10at")
 default_color = Color(0.3019608, 0.34901962, 1, 1)
+
+[node name="WaterChunks" type="Node2D" parent="." unique_id=915431517]

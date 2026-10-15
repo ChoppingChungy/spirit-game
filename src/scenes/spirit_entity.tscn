@@ -13,16 +13,16 @@ var speed = 500.0 # Base speed the ghost returns to
 var panic = 0.5 # How strongly pressure increases difficulty
 var accel_mult = 1.5 # How quickly speed returns to base speed
 
-var move_interval = 0.25 # base Average time between moves
+var move_interval = 1 # base Average time between moves
 var move_timer = 0 #live timer the ghost uses
 var turn_timer = 0#timer used to for turns
 var turn_speed = 0#speed for turns
 
 var base_difficulty = 0.2
 
-var movement_weight = 75
+var movement_weight = 70
 var teleport_weight = 25
-var special_weight = 0
+var special_weight = 5
 
 var velocity = Vector2(200, 200).normalized() * speed
 
@@ -159,6 +159,7 @@ func _on_fight_mode_pressure_changed(pressure: Variant) -> void:
 size = Vector2(20, 60)
 
 [node name="SpiritEntity" type="Node2D" unique_id=355366846]
+z_index = 8
 script = SubResource("GDScript_t2nh6")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2059534226]

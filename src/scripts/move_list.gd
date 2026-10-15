@@ -6,6 +6,7 @@ func choose_move(category,difficulty):
 	
 	
 	# Calculate the weight of every move
+	
 	for move in category_list[category]:
 		var difference = abs(difficulty - move["difficulty"])
 		var weight = pow(1.0 - difference, 2)
@@ -34,14 +35,21 @@ func choose_move(category,difficulty):
 var movement_moves = [
 	{
 		"action": dash,
-		"difficulty":0.1,
+		"difficulty":0.2,
 	},
 	{
 		"action":circle,
-		"difficulty":0.5
+		"difficulty":0.4
 		
-	}
-	
+	},
+	{	
+		"action":reverse,
+		"difficulty":0.1
+	},
+	{	
+		"action":launch,
+		"difficulty":0.7
+	},
 ]
 
 var teleport_moves = [
@@ -62,8 +70,9 @@ var teleport_moves = [
 
 var special_moves = [
 	{
-		"action":"double_fake",
-		"difficulty": 1
+		"action":switch_up,
+		"difficulty": 0.2,
+		
 		
 		
 		
@@ -78,24 +87,27 @@ func dash(spirit, direction: Vector2):
 	spirit.velocity = direction * spirit.speed * 2.5
 	
 func circle(spirit,direction):
-	spirit.velocity = direction * spirit.speed * 3
+	spirit.velocity = direction * spirit.speed * 2
 	spirit.turn_timer = 1
 	spirit.turn_speed = spirit.speed / 75.0
 	
+func reverse(spirit, direction):
+	spirit.velocity *= 2
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	spirit.velocity = -spirit.velocity
+func launch(spirit,direction):
+	spirit.velocity *= 0.01
+	await spirit.get_tree().create_timer(0.5).timeout
+	spirit.velocity = direction * spirit.speed * 7.5
+
+
+
+
+
+
+
+
+
 	
 func skip(spirit,direction):
 		
@@ -123,3 +135,21 @@ func anywhere(spirit,direction):
 	var y = randi_range(0, screen_size.y)
 	spirit.position.x = x
 	spirit.position.y = y
+	
+	
+	
+	
+	
+	
+	
+func switch_up(spirit, _direction):
+	for i in range(10):
+		var new_direction = spirit.get_direction(
+			spirit.get_global_mouse_position()
+		)
+
+		var current_speed = spirit.velocity.length()
+
+		spirit.velocity = new_direction * current_speed
+
+		await spirit.get_tree().create_timer(0.25).timeout
