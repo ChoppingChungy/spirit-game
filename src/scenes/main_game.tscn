@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://b2t704h6tdeim"]
 
-[sub_resource type="GDScript" id="GDScript_s7wsd"]
-script/source = "extends Node
-"
+[ext_resource type="Script" uid="uid://bi2f5acgpucnx" path="res://src/scripts/main_game.gd" id="1_wwqub"]
+[ext_resource type="PackedScene" uid="uid://dakkx0t35t33l" path="res://src/scenes/scene_switcher.tscn" id="3_r3nyt"]
 
 [node name="MainGame" type="Node" unique_id=855186453]
-script = SubResource("GDScript_s7wsd")
+script = ExtResource("1_wwqub")
 
 [node name="World" type="Node2D" parent="." unique_id=2064885806]
+unique_name_in_owner = true
+
+[node name="GUI" type="CanvasLayer" parent="." unique_id=1248560299]
+
+[node name="SceneSwitcher" parent="GUI" unique_id=1862007015 instance=ExtResource("3_r3nyt")]
+
+[connection signal="scene_switched" from="GUI/SceneSwitcher" to="." method="_on_scene_switcher_scene_switched"]
