@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvkn4awiardov"]
 
 [ext_resource type="Texture2D" uid="uid://dn3e0xx6flke7" path="res://src/resources/images/Bar_Top.png" id="1_d4wn3"]
+[ext_resource type="Script" uid="uid://baklpme42ay5e" path="res://src/scripts/ToppingManager.gd" id="2_unsi2"]
 
 [sub_resource type="Gradient" id="Gradient_0cvp5"]
 offsets = PackedFloat32Array(1)
@@ -39,3 +40,6 @@ texture = SubResource("GradientTexture2D_s7wsd")
 position = Vector2(1057, 298)
 scale = Vector2(1.53125, 1.53125)
 texture = SubResource("GradientTexture2D_s7wsd")
+
+[node name="Node" type="Node" parent="." unique_id=1700566036]
+script = ExtResource("2_unsi2")
