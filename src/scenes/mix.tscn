@@ -74,3 +74,17 @@ offset_top = 89.0
 offset_right = 1368.0
 offset_bottom = 458.0
 texture_normal = SubResource("GradientTexture2D_qgsut")
+
+[node name="TextureButton6" type="TextureButton" parent="." unique_id=1132621558]
+offset_left = 1433.0
+offset_top = 89.0
+offset_right = 1637.0
+offset_bottom = 458.0
+texture_normal = SubResource("GradientTexture2D_qgsut")
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_drink_clicked" binds= [0]]
+[connection signal="pressed" from="TextureButton2" to="." method="_on_drink_clicked" binds= [1]]
+[connection signal="pressed" from="TextureButton3" to="." method="_on_drink_clicked" binds= [2]]
+[connection signal="pressed" from="TextureButton4" to="." method="_on_drink_clicked" binds= [3]]
+[connection signal="pressed" from="TextureButton5" to="." method="_on_drink_clicked" binds= [4]]
+[connection signal="pressed" from="TextureButton6" to="." method="_on_drink_clicked" binds= [5]]
