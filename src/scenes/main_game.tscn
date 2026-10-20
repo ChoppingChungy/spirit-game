@@ -19,3 +19,4 @@ unique_name_in_owner = true
 visible = false
 
 [connection signal="scene_switched" from="GUI/SceneSwitcher" to="." method="_on_scene_switcher_scene_switched"]
+[connection signal="mix_pressed" from="GUI/MixMenu" to="." method="_on_mix_menu_mix_pressed"]

@@ -19,3 +19,8 @@ func increment_meter() -> void:
 
 func _on_mix_pressed() -> void:
 	mix_pressed.emit()
+
+
+func reset() -> void:
+	set_mix_visibility(false)
+	set_meter(0)

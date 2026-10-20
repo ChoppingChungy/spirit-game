@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://co61gy3pe3qm8"]
 
+[ext_resource type="Script" uid="uid://crdrg8id5cqa0" path="res://src/scripts/topping.gd" id="1_168y2"]
+
 [sub_resource type="Gradient" id="Gradient_21xd2"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0.5, 0.24563241, 0, 1)
@@ -15,6 +17,7 @@ colors = PackedColorArray(1, 1, 1, 1)
 gradient = SubResource("Gradient_s7rlf")
 
 [node name="Topping" type="Node2D" unique_id=229168026]
+script = ExtResource("1_168y2")
 
 [node name="Bar" type="Sprite2D" parent="." unique_id=891087781]
 position = Vector2(0, 578.00006)

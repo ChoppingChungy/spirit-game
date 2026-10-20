@@ -11,11 +11,10 @@ const DRINK_SELECTED_MENU = preload("uid://c3b0oklocj8vt")
 @onready var mix_menu: MixMenu = $GUI/MixMenu as MixMenu
 
 var current_scene: Node2D
-var current_scene_name: String
 
 var current_selected_drink: String
 
-enum Topping {
+enum ToppingType {
 	CHERRY,
 	BLOOD_ORANGE,
 }
@@ -32,44 +31,38 @@ enum DrinkType {
 
 class Drink:
 	var base: Array[DrinkType] = []
-	var topping: Topping
+	var topping: ToppingType
 
 var current_drink = Drink.new()
 
 func _ready() -> void:
 	current_scene = BAR.instantiate()
-	current_scene_name = "bar"
 	world.add_child(current_scene)
 	scene_switcher.set_pointing_to("drinks")
 
 
 func switch_scene():
 	var new_scene: Node2D
-	var new_scene_name: String
 	
 	if current_scene:
 		current_scene.queue_free()
 	
 	# This is kind of confusing, but we're matching where we're swapping FROM, not TO.
-	match current_scene_name:
-		"bar":
+		if current_scene is Bar:
 			new_scene = MIX.instantiate() as Mix
 			new_scene.drink_selected.connect(_on_mix_drink_selected)
-			new_scene_name = "drinks"
 			scene_switcher.set_pointing_to("bar")
 			
 			mix_menu.show()
 			
-		"drinks":
+		elif current_scene is Mix or current_scene is Topping:
 			new_scene = BAR.instantiate() as Bar
-			new_scene_name = "bar"
 			scene_switcher.set_pointing_to("drinks")
 			
 			mix_menu.hide()
 	
 	world.add_child(new_scene)
 	current_scene = new_scene
-	current_scene_name = new_scene_name
 
 
 func _on_scene_switcher_scene_switched() -> void:
@@ -118,3 +111,11 @@ func _on_drink_menu_canceled() -> void:
 func reset_drink() -> void:
 	mix_menu.set_mix_visibility(false)
 	current_drink = Drink.new()
+
+
+func _on_mix_menu_mix_pressed() -> void:
+	current_scene.queue_free()
+	current_scene = TOPPING.instantiate()
+	world.add_child(current_scene)
+	mix_menu.hide()
+	mix_menu.reset()
