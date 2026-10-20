@@ -14,6 +14,13 @@ var current_scene: Node2D
 
 var current_selected_drink: String
 
+enum DrinkStation {
+	MIX,
+	TOPPING,
+}
+
+var current_drink_station: DrinkStation = DrinkStation.MIX
+
 enum ToppingType {
 	CHERRY,
 	BLOOD_ORANGE,
@@ -49,11 +56,16 @@ func switch_scene():
 	
 	# This is kind of confusing, but we're matching where we're swapping FROM, not TO.
 		if current_scene is Bar:
-			new_scene = MIX.instantiate() as Mix
-			new_scene.drink_selected.connect(_on_mix_drink_selected)
+			match current_drink_station:
+				DrinkStation.MIX:
+					new_scene = MIX.instantiate() as Mix
+					new_scene.drink_selected.connect(_on_mix_drink_selected)
+					mix_menu.show()
+					
+				DrinkStation.TOPPING:
+					new_scene = TOPPING.instantiate() as Topping
+					
 			scene_switcher.set_pointing_to("bar")
-			
-			mix_menu.show()
 			
 		elif current_scene is Mix or current_scene is Topping:
 			new_scene = BAR.instantiate() as Bar
@@ -119,3 +131,5 @@ func _on_mix_menu_mix_pressed() -> void:
 	world.add_child(current_scene)
 	mix_menu.hide()
 	mix_menu.reset()
+	
+	current_drink_station = DrinkStation.TOPPING
