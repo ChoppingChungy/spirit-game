@@ -1,6 +1,7 @@
 class_name Mix
 extends Node2D
 
+## Tells the main game what drink was selected for the title.
 signal drink_selected(drink_type: String)
 
 enum Drinks {
@@ -15,14 +16,14 @@ enum Drinks {
 
 var selected_drink: Drinks = Drinks.NONE
 
-
 func _on_drink_clicked(drink_type: Drinks) -> void:
 	# Returns early if the drink isn't NONE, since that means we're currently deciding to pour or cancel.
 	if not selected_drink == Drinks.NONE:
-		pass
-		
+		return
+	
 	selected_drink = drink_type
-	print_debug(selected_drink)
+	
+	# Tells the MainGame what drink was selected
 	match drink_type:
 		Drinks.VODKA:
 			drink_selected.emit("vodka")
@@ -38,7 +39,7 @@ func _on_drink_clicked(drink_type: Drinks) -> void:
 			drink_selected.emit("rum")
 
 
-func pour() -> int:
+func pour() -> Drinks:
 	var returned_drink = selected_drink
 	selected_drink = Drinks.NONE
 	return returned_drink

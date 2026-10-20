@@ -1,13 +1,13 @@
 class_name DrinkSelectedMenu
 extends Control
 
-signal mixed
+signal poured
 signal canceled
 
 @onready var drink_tooltip: DrinkTooltip = $DrinkTooltip
 
-func _on_mix_pressed() -> void:
-	mixed.emit()
+func _on_pour_pressed() -> void:
+	poured.emit()
 	queue_free()
 
 

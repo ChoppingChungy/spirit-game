@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b2t704h6tdeim"]
 
 [ext_resource type="Script" uid="uid://bi2f5acgpucnx" path="res://src/scripts/main_game.gd" id="1_wwqub"]
+[ext_resource type="PackedScene" uid="uid://d0lr7g3kh3wtf" path="res://src/scenes/mix_menu.tscn" id="3_m7syd"]
 [ext_resource type="PackedScene" uid="uid://dakkx0t35t33l" path="res://src/scenes/scene_switcher.tscn" id="3_r3nyt"]
 
 [node name="MainGame" type="Node" unique_id=855186453]
@@ -10,7 +11,11 @@ script = ExtResource("1_wwqub")
 unique_name_in_owner = true
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=1248560299]
+unique_name_in_owner = true
 
 [node name="SceneSwitcher" parent="GUI" unique_id=1862007015 instance=ExtResource("3_r3nyt")]
+
+[node name="MixMenu" parent="GUI" unique_id=1713630294 instance=ExtResource("3_m7syd")]
+visible = false
 
 [connection signal="scene_switched" from="GUI/SceneSwitcher" to="." method="_on_scene_switcher_scene_switched"]

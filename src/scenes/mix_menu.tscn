@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://d0lr7g3kh3wtf"]
+
+[ext_resource type="Script" uid="uid://dagvxrp1hlit6" path="res://src/scripts/mix_menu.gd" id="1_n7lph"]
+
+[node name="MixMenu" type="Control" unique_id=1713630294]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_n7lph")
+
+[node name="Mix" type="Button" parent="." unique_id=2138752518]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -97.5
+offset_top = -246.0
+offset_right = 97.5
+offset_bottom = -91.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 107
+text = "Mix"
+
+[node name="FillMeter" type="ProgressBar" parent="." unique_id=1135785560]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 146.0
+offset_top = -94.0
+offset_right = 192.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+max_value = 3.0
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[connection signal="pressed" from="Mix" to="." method="_on_mix_pressed"]
