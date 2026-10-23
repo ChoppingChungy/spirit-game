@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3b0oklocj8vt"]
 
-[ext_resource type="PackedScene" uid="uid://dpo8resl6cwkm" path="res://src/scenes/drink_tooltip.tscn" id="1_c1gg7"]
+[ext_resource type="PackedScene" uid="uid://dpo8resl6cwkm" path="res://src/scenes/tooltip.tscn" id="1_c1gg7"]
 [ext_resource type="Script" uid="uid://ubf7i7x2vl7p" path="res://src/scripts/drink_selected_menu.gd" id="1_fqaic"]
 
 [sub_resource type="Gradient" id="Gradient_c1gg7"]
@@ -23,7 +23,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_fqaic")
 
-[node name="DrinkTooltip" parent="." unique_id=1355192030 instance=ExtResource("1_c1gg7")]
+[node name="Tooltip" parent="." unique_id=1355192030 instance=ExtResource("1_c1gg7")]
 layout_mode = 1
 
 [node name="Pour" type="TextureButton" parent="." unique_id=1162989709]

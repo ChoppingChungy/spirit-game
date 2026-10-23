@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dpo8resl6cwkm"]
 
-[ext_resource type="Script" uid="uid://bclad3qt5w183" path="res://src/scripts/drink_tooltip.gd" id="1_btcjj"]
+[ext_resource type="Script" uid="uid://bclad3qt5w183" path="res://src/scripts/tooltip.gd" id="1_btcjj"]
 
-[node name="DrinkTooltip" type="Control" unique_id=1355192030]
+[node name="Tooltip" type="Control" unique_id=1355192030]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

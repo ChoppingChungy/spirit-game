@@ -4,6 +4,7 @@ const BAR = preload("uid://bvkn4awiardov")
 const MIX = preload("uid://rswunmjp4n4w")
 const TOPPING = preload("uid://co61gy3pe3qm8")
 const DRINK_SELECTED_MENU = preload("uid://c3b0oklocj8vt")
+const TOPPING_SELECTED_MENU = preload("uid://v4kgp8fow7ge")
 
 @onready var gui: CanvasLayer = %GUI
 @onready var scene_switcher: SceneSwitcher = $GUI/SceneSwitcher
@@ -21,8 +22,11 @@ enum DrinkStation {
 var current_drink_station: DrinkStation = DrinkStation.MIX
 
 enum ToppingType {
-	CHERRY,
-	BLOOD_ORANGE,
+	TOPPING1,
+	TOPPING2,
+	TOPPING3,
+	TOPPING4,
+	NONE, # Required as it's impossible to assign null to an enum-type var
 }
 
 enum DrinkType {
@@ -37,7 +41,7 @@ enum DrinkType {
 
 class Drink:
 	var base: Array[DrinkType] = []
-	var topping: ToppingType
+	var topping: ToppingType = ToppingType.NONE
 
 var current_drink = Drink.new()
 var current_customer
@@ -135,8 +139,11 @@ func _on_mix_menu_mix_pressed() -> void:
 	current_scene = TOPPING.instantiate() as Topping
 	current_scene.topping_selected.connect(_on_topping_topping_selected)
 	world.add_child(current_scene)
+	
 	mix_menu.hide()
 	mix_menu.reset()
+	
+	topping_menu.show()
 	
 	current_drink_station = DrinkStation.TOPPING
 
@@ -150,7 +157,33 @@ func _on_topping_menu_serve_pressed() -> void:
 	topping_menu.reset()
 
 ## Handles the player selecting a topping in the topping station.
-func _on_topping_topping_selected(topping_type: ToppingType) -> void:
-	#TODO: show tooltip
-	#TODO: show use / cancel buttons
-	pass
+func _on_topping_topping_selected(topping_type: String) -> void:
+	# Returns early to prevent new topping from being added when the topping has already been placed.
+	if current_drink.topping != ToppingType.NONE:
+		return
+	
+	var main_topping_menu := TOPPING_SELECTED_MENU.instantiate() as ToppingSelectedMenu
+	
+	# Connects the drink menu's pour function to pour the drink in the Mix scene and add it to the current_drink
+	main_topping_menu.used.connect(_on_topping_menu_used)
+	main_topping_menu.canceled.connect(_on_topping_menu_canceled)
+	gui.add_child(main_topping_menu)
+	print_debug(topping_type)
+	# Sets the drink tooltip in the topping_menu.
+	main_topping_menu.set_tooltip(topping_type.capitalize(), "Default")
+
+
+func _on_topping_menu_used() -> void:
+	var topping_scene = current_scene as Topping
+	var topping_used: ToppingType = topping_scene.top() as ToppingType
+	
+	# Adds the used topping into the drink.
+	current_drink.topping = topping_used
+
+	if current_drink.topping != ToppingType.NONE:
+		pass # Do something here to only allow mixing in the Mix menu.
+
+
+func _on_topping_menu_canceled() -> void:
+	var topping_scene := current_scene as Topping
+	topping_scene.cancel()

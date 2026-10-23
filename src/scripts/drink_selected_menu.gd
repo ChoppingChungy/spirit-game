@@ -4,7 +4,7 @@ extends Control
 signal poured
 signal canceled
 
-@onready var drink_tooltip: DrinkTooltip = $DrinkTooltip
+@onready var tooltip: Tooltip = $Tooltip
 
 func _on_pour_pressed() -> void:
 	poured.emit()
@@ -17,5 +17,5 @@ func _on_cancel_pressed() -> void:
 
 
 func set_tooltip(title: String, information: String) -> void:
-	drink_tooltip.set_title(title)
-	drink_tooltip.set_information(information)
+	tooltip.set_title(title)
+	tooltip.set_information(information)

@@ -35,3 +35,4 @@ func top() -> Toppings:
 ## Cancels the topping and returns to a no-topping state.
 func cancel() -> void:
 	selected_topping = Toppings.NONE
+	
