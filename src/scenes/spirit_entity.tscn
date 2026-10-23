@@ -1,0 +1,184 @@
+[gd_scene format=3 uid="uid://co8xkftb3bsll"]
+
+[ext_resource type="Texture2D" uid="uid://d3tpk1fmcx55j" path="res://Ghost.png" id="1_g2pkk"]
+
+[sub_resource type="GDScript" id="GDScript_t2nh6"]
+resource_name = "spirit_entity"
+script/source = "extends Node2D
+signal wet
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var collision: CollisionPolygon2D = $Area2D/CollisionPolygon2D
+
+var spirit_name = \"pirate\"
+var speed = 500.0 # Base speed the ghost returns to
+var panic = 0.5 # How strongly pressure increases difficulty
+var accel_mult = 1.5 # How quickly speed returns to base speed
+var resize = 1
+
+var move_interval = 1 # base Average time between moves
+var move_timer = 0 #live timer the ghost uses
+var turn_timer = 0#timer used to for turns
+var turn_speed = 0#speed for turns
+
+var base_difficulty = 0.2
+
+var movement_weight = 70
+var teleport_weight = 25
+var special_weight = 5
+
+var velocity = Vector2(200, 200).normalized() * speed
+
+var radius = 15 # Distance ghost center stays from screen edge
+var current_pressure = 0.0
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	movement_weight = ghost_db.ghosts[spirit_name][\"movement_weight\"]
+	teleport_weight = ghost_db.ghosts[spirit_name][\"teleport_weight\"]
+	special_weight = ghost_db.ghosts[spirit_name][\"special_weight\"]
+	base_difficulty = ghost_db.ghosts[spirit_name][\"difficulty\"]
+	speed = ghost_db.ghosts[spirit_name][\"speed\"]
+	panic = ghost_db.ghosts[spirit_name][\"panic\"]
+	accel_mult = ghost_db.ghosts[spirit_name][\"accel_mult\"]
+	move_interval = ghost_db.ghosts[spirit_name][\"movement_interval\"]
+	resize = ghost_db.ghosts[spirit_name][\"scale\"]
+	scale = Vector2(resize,resize)
+
+
+func choose_category():
+	var total_weight = movement_weight + teleport_weight + special_weight
+	var roll = randf_range(0.0, total_weight)
+
+	if roll < movement_weight:
+		return \"movement\"
+
+	elif roll < movement_weight + teleport_weight:
+		return \"teleport\"
+
+	else:
+		return \"special\"
+
+func bounce_off_walls():
+	var screen_size = get_viewport_rect().size
+
+	if position.x <= radius:
+		position.x = radius
+		velocity.x = abs(velocity.x)
+
+	elif position.x >= screen_size.x - radius:
+		position.x = screen_size.x - radius
+		velocity.x = -abs(velocity.x)
+
+	if position.y <= radius:
+		position.y = radius
+		velocity.y = abs(velocity.y)
+
+	elif position.y >= screen_size.y - radius:
+		position.y = screen_size.y - radius
+		velocity.y = -abs(velocity.y)
+
+func get_direction(mouse: Vector2) -> Vector2:
+	var screen_size = get_viewport_rect().size
+	var center = screen_size / 2.0
+
+	# Direction toward center, scaled by distance from center
+	var screen_influence = Vector2(
+		(center.x - position.x) / center.x,
+		(center.y - position.y) / center.y
+	)
+
+	# Make screen influence weak near center and strong near edges
+	screen_influence.x = sign(screen_influence.x) * pow(abs(screen_influence.x), 2)
+	screen_influence.y = sign(screen_influence.y) * pow(abs(screen_influence.y), 2)
+
+	# Direction away from mouse
+	var mouse_vector = position - mouse
+	var mouse_distance = mouse_vector.length()
+	var mouse_direction = mouse_vector.normalized()
+
+	# Mouse influence gets stronger as mouse gets closer
+	var mouse_range = 400.0
+	var mouse_strength = clamp(
+		1.0 - mouse_distance / mouse_range,
+		0.0,
+		0.999
+	)
+
+	var mouse_influence = mouse_direction * mouse_strength
+
+	# Let the two influences compete
+	var direction = screen_influence + mouse_influence
+
+	# Safety fallback if they somehow cancel
+	if direction.length() < 0.001:
+		direction = Vector2.RIGHT
+
+	return direction.normalized()
+
+func _process(delta: float) -> void:
+	move_timer -= delta
+	
+	
+	if move_timer <= 0:
+		var timer_decrease = move_interval * current_pressure
+		move_timer = (move_interval - timer_decrease) * randf_range(0.8, 1.2)
+		var desired_direction = get_direction(get_global_mouse_position())
+		var selected_move = move_list.choose_move(choose_category(),base_difficulty)
+		turn_timer = 0
+		selected_move[\"action\"].call(self, desired_direction)
+		
+func _physics_process(delta):
+	if turn_timer > 0:
+		velocity = velocity.rotated(turn_speed * delta)
+		turn_timer -= delta
+
+	if turn_timer <= 0:
+			turn_speed = 0.0
+	
+	var current_speed = velocity.length()
+	var acceleration = speed * accel_mult
+
+	current_speed = move_toward(
+		current_speed,
+		speed,
+		acceleration * delta
+	)
+
+	velocity = velocity.normalized() * current_speed
+
+	position += velocity * delta
+
+	bounce_off_walls()
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group(\"watergun\"):
+		print(\"ooh\")
+		emit_signal(\"wet\")
+
+
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	if area.is_in_group(\"watergun\"):
+		
+		emit_signal(\"wet\")
+
+
+func _on_fight_mode_pressure_changed(pressure: Variant) -> void:
+	current_pressure = pressure * panic
+"
+
+[node name="SpiritEntity" type="Node2D" unique_id=355366846]
+z_index = 8
+script = SubResource("GDScript_t2nh6")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2059534226]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1981965381]
+position = Vector2(1, -236)
+polygon = PackedVector2Array(0, -1, 201, 108, 231, 202, 148, 321, -8, 451, -161, 308, -229, 207, -202, 116)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=783256592]
+position = Vector2(0, -1.5258789e-05)
+texture = ExtResource("1_g2pkk")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

@@ -1,0 +1,142 @@
+[gd_scene format=3 uid="uid://rfsqo1g5h5jc"]
+
+[sub_resource type="GDScript" id="GDScript_5omm6"]
+script/source = "extends Node2D
+@onready var hit_box: Area2D = $HitBox
+@onready var muzzle: Marker2D = $Muzzle
+@onready var stream: Line2D = $Stream
+@onready var water_chunks: Node2D = $WaterChunks
+const CHUNK = preload(\"res://water.png\")
+var chunks = []
+var start
+var chunk_spacing = 10.0
+var max_chunks = 200
+var chunk_speed = 1
+
+func update_chunks(mouse: Vector2, delta: float):
+	start = muzzle.global_position
+	var end = mouse
+
+	var direction = (end - start).normalized()
+	var perpendicular = Vector2(-direction.y, direction.x)
+
+	for chunk in chunks:
+		var sprite = chunk[\"sprite\"]
+		var t = chunk[\"t\"]
+
+		t += chunk_speed * delta
+
+		if t >= 1.0:
+			t -= 1.0
+
+			sprite.rotation = randf_range(0.0, TAU)
+			chunk[\"size_mult\"] = randf_range(0.6, 1)
+			chunk[\"offset\"] = randf_range(-8.0, 8.0)
+
+		chunk[\"t\"] = t
+
+		# Base position along stream
+		var point = start.lerp(end, t)
+
+		# Slight random sideways displacement
+		var offset_scale = lerp(1.0, 0.3, t)
+		point += perpendicular * chunk[\"offset\"] * offset_scale
+
+		sprite.global_position = point
+
+		# Perspective scaling
+		var size = lerp(1.5, 0.35, t)
+		size *= chunk[\"size_mult\"]
+
+		sprite.scale = Vector2.ONE * size
+		
+func update_chunk_count(mouse: Vector2):
+	var distance = muzzle.global_position.distance_to(mouse)
+	var desired_count = int(distance / chunk_spacing)
+
+	desired_count = clamp(desired_count, 5, max_chunks)
+
+	while chunks.size() < desired_count:
+		add_chunk()
+
+	while chunks.size() > desired_count:
+		remove_chunk()
+
+
+func add_chunk():
+	var sprite = Sprite2D.new()
+	sprite.texture = CHUNK
+	sprite.rotation = randf_range(0.0, TAU)
+
+	water_chunks.add_child(sprite)
+
+	chunks.append({
+		\"sprite\": sprite,
+		\"t\": randf(),
+		\"size_mult\": randf_range(0.8, 1.2),
+		\"offset\": randf_range(-8.0, 8.0)
+	})
+func remove_chunk():
+	var chunk = chunks.pop_back()
+	chunk[\"sprite\"].queue_free()
+	
+func update_stream(mouse: Vector2):
+	var start = muzzle.global_position
+	var end = mouse
+	var point_count = 16
+
+	var direction = (end - start).normalized()
+	var perpendicular = Vector2(-direction.y, direction.x)
+	var time = Time.get_ticks_msec() * 0.01
+
+	stream.clear_points()
+
+	for i in range(point_count):
+		var t = float(i) / float(point_count - 1)
+		var point = start.lerp(end, t)
+
+		# Very subtle water movement
+		if i != 0 and i != point_count - 1:
+			var wave = sin(t * 20.0 + time) * 1.5
+			point += perpendicular * wave
+
+		stream.add_point(stream.to_local(point))
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var mouse = get_global_mouse_position()
+
+	hit_box.global_position = mouse
+
+	update_chunk_count(mouse)
+	update_chunks(mouse, delta)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_64jkt"]
+
+[sub_resource type="Curve" id="Curve_m10at"]
+_data = [Vector2(0.011952192, 1), 0.0, 0.0, 0, 0, Vector2(0.07171315, 0.90082645), 0.0, 0.0, 0, 0, Vector2(0.20717129, 0.8016529), 0.0, 0.0, 0, 0, Vector2(0.38645416, 0.661157), 0.0, 0.0, 0, 0, Vector2(0.5338645, 0.59504133), 0.0, 0.0, 0, 0, Vector2(0.72509956, 0.42975205), 0.0, 0.0, 0, 0, Vector2(0.9163346, 0.23966944), 0.0, 0.0, 0, 0, Vector2(1, 0.21487606), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[node name="WaterGun" type="Node2D" unique_id=102644220 groups=["watergun"]]
+script = SubResource("GDScript_5omm6")
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=116020614]
+position = Vector2(1314, 686)
+
+[node name="HitBox" type="Area2D" parent="." unique_id=269650320 groups=["watergun"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1527998794 groups=["watergun"]]
+modulate = Color(1, 1, 0.27058825, 1)
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_64jkt")
+
+[node name="Stream" type="Line2D" parent="." unique_id=1233602489]
+points = PackedVector2Array(849, -173)
+width_curve = SubResource("Curve_m10at")
+default_color = Color(0.3019608, 0.34901962, 1, 1)
+
+[node name="WaterChunks" type="Node2D" parent="." unique_id=915431517]
