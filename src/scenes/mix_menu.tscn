@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dagvxrp1hlit6" path="res://src/scripts/mix_menu.gd" id="1_n7lph"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7wsd"]
+bg_color = Color(0.85490197, 0, 0, 1)
+
 [node name="MixMenu" type="Control" unique_id=1713630294]
 layout_mode = 3
 anchors_preset = 15
@@ -50,4 +53,21 @@ step = 1.0
 fill_mode = 3
 show_percentage = false
 
+[node name="Trash" type="Button" parent="." unique_id=944120998]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 400.0
+offset_top = -246.0
+offset_right = 697.0
+offset_bottom = -91.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 107
+theme_override_styles/normal = SubResource("StyleBoxFlat_s7wsd")
+text = "Trash"
+
 [connection signal="pressed" from="Mix" to="." method="_on_mix_pressed"]
+[connection signal="pressed" from="Trash" to="." method="_on_trash_pressed"]

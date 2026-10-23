@@ -12,8 +12,6 @@ const DRINK_SELECTED_MENU = preload("uid://c3b0oklocj8vt")
 
 var current_scene: Node2D
 
-var current_selected_drink: String
-
 enum DrinkStation {
 	MIX,
 	TOPPING,
@@ -56,6 +54,8 @@ func switch_scene():
 	
 	# This is kind of confusing, but we're matching where we're swapping FROM, not TO.
 		if current_scene is Bar:
+			
+			# Loads either the mix or topping stations, depending on which one is needed.
 			match current_drink_station:
 				DrinkStation.MIX:
 					new_scene = MIX.instantiate() as Mix
@@ -82,6 +82,7 @@ func _on_scene_switcher_scene_switched() -> void:
 
 
 func _on_mix_drink_selected(drink_type: String) -> void:
+	print_debug(current_drink.base.size())
 	# Returns early to prevent new drinks from being added when the drink is full.
 	if current_drink.base.size() == 3:
 		return
@@ -108,7 +109,7 @@ func _on_drink_menu_poured() -> void:
 	current_drink.base.append(poured_drink)
 
 	# Shows the mix button by default, since pouring a unit implies that there is more than one unit in the drink.
-	mix_menu.set_mix_visibility(true)
+	mix_menu.set_button_visibility(true)
 
 	if current_drink.base.size() == 3:
 		pass # Do something here to only allow mixing in the Mix menu.
@@ -121,7 +122,10 @@ func _on_drink_menu_canceled() -> void:
 
 ## Resets the drink if the user trashes it or finishes the current customer.
 func reset_drink() -> void:
-	mix_menu.set_mix_visibility(false)
+	var mix_scene = current_scene as Mix
+	mix_scene.cancel()
+	mix_menu.set_button_visibility(false)
+	mix_menu.reset()
 	current_drink = Drink.new()
 
 
@@ -133,3 +137,7 @@ func _on_mix_menu_mix_pressed() -> void:
 	mix_menu.reset()
 	
 	current_drink_station = DrinkStation.TOPPING
+
+
+func _on_mix_menu_trash_pressed() -> void:
+	reset_drink()

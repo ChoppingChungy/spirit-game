@@ -33,4 +33,3 @@ func set_pointing_to(pointing_to: String) -> void:
 			switcher.texture_hover = DRINKS_2
 			switcher.set_anchors_preset(Control.PRESET_CENTER_RIGHT, true)
 			switcher.position.x -= 400
-			
