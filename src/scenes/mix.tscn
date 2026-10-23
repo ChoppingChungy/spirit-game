@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://rswunmjp4n4w"]
 
 [ext_resource type="Script" uid="uid://bv0adv0jofxgy" path="res://src/scripts/mix.gd" id="1_qgsut"]
+[ext_resource type="Texture2D" uid="uid://xnhfya1wsv54" path="res://src/resources/images/Red_Rum.png" id="2_5m66n"]
+[ext_resource type="Texture2D" uid="uid://blaetca0ydaha" path="res://src/resources/images/Vodka.png" id="2_dbwtw"]
+[ext_resource type="Texture2D" uid="uid://x0wjmmcrx0xd" path="res://src/resources/images/Whisky.png" id="3_3jqxk"]
+[ext_resource type="Texture2D" uid="uid://wxxxtoaes1wa" path="res://src/resources/images/Ginger_Beer.png" id="4_ja6bk"]
 
 [sub_resource type="Gradient" id="Gradient_xo4u2"]
 offsets = PackedFloat32Array(1)
@@ -29,62 +33,66 @@ height = 369
 script = ExtResource("1_qgsut")
 
 [node name="Bar" type="Sprite2D" parent="." unique_id=71625712]
-position = Vector2(0, 700)
+position = Vector2(0, 888)
 scale = Vector2(7.5, 385.178)
 texture = SubResource("GradientTexture1D_xo4u2")
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=24935197]
-position = Vector2(0, 456)
+position = Vector2(0, 619)
 scale = Vector2(1, 37)
 texture = SubResource("GradientTexture1D_s7wsd")
 centered = false
 
 [node name="Vodka" type="TextureButton" parent="." unique_id=915260520]
-offset_left = 102.0
-offset_top = 89.0
-offset_right = 306.0
-offset_bottom = 457.0
-texture_normal = SubResource("GradientTexture2D_qgsut")
+offset_left = 44.0
+offset_top = 179.99998
+offset_right = 444.0
+offset_bottom = 780.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("2_dbwtw")
+stretch_mode = 4
 
 [node name="Tequila" type="TextureButton" parent="." unique_id=1201203487]
-offset_left = 358.0
-offset_top = 89.0
-offset_right = 562.0
-offset_bottom = 458.0
+offset_left = 511.0
+offset_top = 245.0
+offset_right = 715.0
+offset_bottom = 614.0
 texture_normal = SubResource("GradientTexture2D_qgsut")
 
 [node name="Brandy" type="TextureButton" parent="." unique_id=1351981382]
-offset_left = 624.0
-offset_top = 89.0
-offset_right = 828.0
-offset_bottom = 458.0
+offset_left = 777.0
+offset_top = 245.0
+offset_right = 981.0
+offset_bottom = 614.0
 texture_normal = SubResource("GradientTexture2D_qgsut")
 
 [node name="Whiskey" type="TextureButton" parent="." unique_id=1515463079]
-offset_left = 900.0
-offset_top = 89.0
-offset_right = 1104.0
-offset_bottom = 458.0
-texture_normal = SubResource("GradientTexture2D_qgsut")
+offset_left = 988.0
+offset_top = 167.0
+offset_right = 1388.0
+offset_bottom = 767.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("3_3jqxk")
 
-[node name="Gin" type="TextureButton" parent="." unique_id=699190184]
-offset_left = 1164.0
-offset_top = 89.0
-offset_right = 1368.0
-offset_bottom = 458.0
-texture_normal = SubResource("GradientTexture2D_qgsut")
+[node name="Ginger" type="TextureButton" parent="." unique_id=699190184]
+offset_left = 1317.0
+offset_top = 353.0
+offset_right = 1567.0
+offset_bottom = 722.0
+texture_normal = ExtResource("4_ja6bk")
 
 [node name="Rum" type="TextureButton" parent="." unique_id=1132621558]
-offset_left = 1433.0
-offset_top = 89.0
-offset_right = 1637.0
-offset_bottom = 458.0
-texture_normal = SubResource("GradientTexture2D_qgsut")
+offset_left = 1586.0
+offset_top = 170.0
+offset_right = 1986.0
+offset_bottom = 770.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("2_5m66n")
 
 [connection signal="pressed" from="Vodka" to="." method="_on_drink_clicked" binds= [0]]
 [connection signal="pressed" from="Tequila" to="." method="_on_drink_clicked" binds= [1]]
 [connection signal="pressed" from="Brandy" to="." method="_on_drink_clicked" binds= [2]]
 [connection signal="pressed" from="Whiskey" to="." method="_on_drink_clicked" binds= [3]]
-[connection signal="pressed" from="Gin" to="." method="_on_drink_clicked" binds= [4]]
+[connection signal="pressed" from="Ginger" to="." method="_on_drink_clicked" binds= [4]]
 [connection signal="pressed" from="Rum" to="." method="_on_drink_clicked" binds= [5]]

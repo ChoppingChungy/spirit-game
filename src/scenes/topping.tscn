@@ -16,6 +16,11 @@ colors = PackedColorArray(1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_s7wsd"]
 gradient = SubResource("Gradient_s7rlf")
 
+[sub_resource type="Gradient" id="Gradient_168y2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s7rlf"]
+gradient = SubResource("Gradient_168y2")
+
 [node name="Topping" type="Node2D" unique_id=229168026]
 script = ExtResource("1_168y2")
 
@@ -29,3 +34,68 @@ centered = false
 position = Vector2(954, 563)
 scale = Vector2(6.320312, 9.203125)
 texture = SubResource("GradientTexture2D_s7wsd")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=2066987732]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 126.0
+offset_top = 558.0
+offset_right = 251.89879
+offset_bottom = 679.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("GradientTexture2D_s7rlf")
+stretch_mode = 0
+
+[node name="TextureButton2" type="TextureButton" parent="." unique_id=1060524951]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 457.0
+offset_top = 558.0
+offset_right = 582.8988
+offset_bottom = 679.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("GradientTexture2D_s7rlf")
+stretch_mode = 0
+
+[node name="TextureButton3" type="TextureButton" parent="." unique_id=367492699]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1333.0
+offset_top = 558.0
+offset_right = 1458.8988
+offset_bottom = 679.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("GradientTexture2D_s7rlf")
+stretch_mode = 0
+
+[node name="TextureButton4" type="TextureButton" parent="." unique_id=1495827062]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1629.0
+offset_top = 558.0
+offset_right = 1754.8988
+offset_bottom = 679.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("GradientTexture2D_s7rlf")
+stretch_mode = 0
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_topping_clicked" binds= [0]]
+[connection signal="pressed" from="TextureButton2" to="." method="_on_topping_clicked" binds= [1]]
+[connection signal="pressed" from="TextureButton3" to="." method="_on_topping_clicked" binds= [2]]
+[connection signal="pressed" from="TextureButton4" to="." method="_on_topping_clicked" binds= [3]]

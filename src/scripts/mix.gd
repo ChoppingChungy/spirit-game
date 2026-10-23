@@ -9,7 +9,7 @@ enum Drinks {
 	TEQUILA,
 	BRANDY,
 	WHISKEY,
-	GIN,
+	GINGER,
 	RUM,
 	NONE, # Required as it's impossible to assign null to an enum-type var
 }
@@ -33,8 +33,8 @@ func _on_drink_clicked(drink_type: Drinks) -> void:
 			drink_selected.emit("brandy")
 		Drinks.WHISKEY:
 			drink_selected.emit("whiskey")
-		Drinks.GIN:
-			drink_selected.emit("gin")
+		Drinks.GINGER:
+			drink_selected.emit("ginger")
 		Drinks.RUM:
 			drink_selected.emit("rum")
 
