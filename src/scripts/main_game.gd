@@ -44,7 +44,7 @@ class Drink:
 	var topping: ToppingType = ToppingType.NONE
 
 var current_drink = Drink.new()
-var current_customer
+
 func _ready() -> void:
 	current_scene = BAR.instantiate()
 	world.add_child(current_scene)
@@ -131,6 +131,10 @@ func reset_drink() -> void:
 	mix_scene.cancel()
 	mix_menu.set_button_visibility(false)
 	mix_menu.reset()
+	
+	# If the topping menu is showing, it's now hidden.
+	topping_menu.hide()
+	
 	current_drink = Drink.new()
 
 
@@ -187,3 +191,25 @@ func _on_topping_menu_used() -> void:
 func _on_topping_menu_canceled() -> void:
 	var topping_scene := current_scene as Topping
 	topping_scene.cancel()
+
+
+func _on_topping_menu_trash_pressed() -> void:
+	current_drink_station = DrinkStation.MIX
+	
+	# Frees the old topping scene, which is guaranteed to exist.
+	current_scene.queue_free()
+	
+	# Makes the current scene the mix scene
+	current_scene = MIX.instantiate() as Mix
+	
+	# Adds the mix scene back into the world node.
+	world.add_child(current_scene)
+	
+	# Resets the drink.
+	reset_drink()
+	
+	# Connects the signals to this script's methods.
+	current_scene.drink_selected.connect(_on_mix_drink_selected)
+	
+	# Shows the mix menu, which has already been reset.
+	mix_menu.show()

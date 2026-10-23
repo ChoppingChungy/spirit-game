@@ -31,3 +31,4 @@ visible = false
 [connection signal="mix_pressed" from="GUI/MixMenu" to="." method="_on_mix_menu_mix_pressed"]
 [connection signal="trash_pressed" from="GUI/MixMenu" to="." method="_on_mix_menu_trash_pressed"]
 [connection signal="serve_pressed" from="GUI/ToppingMenu" to="." method="_on_topping_menu_serve_pressed"]
+[connection signal="trash_pressed" from="GUI/ToppingMenu" to="." method="_on_topping_menu_trash_pressed"]
