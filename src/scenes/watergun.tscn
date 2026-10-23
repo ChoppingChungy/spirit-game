@@ -8,13 +8,13 @@ script/source = "extends Node2D
 @onready var water_chunks: Node2D = $WaterChunks
 const CHUNK = preload(\"res://water.png\")
 var chunks = []
-
+var start
 var chunk_spacing = 10.0
 var max_chunks = 200
 var chunk_speed = 1
 
 func update_chunks(mouse: Vector2, delta: float):
-	var start = muzzle.global_position
+	start = muzzle.global_position
 	var end = mouse
 
 	var direction = (end - start).normalized()
@@ -125,7 +125,7 @@ point_count = 8
 script = SubResource("GDScript_5omm6")
 
 [node name="Muzzle" type="Marker2D" parent="." unique_id=116020614]
-position = Vector2(1496, 899)
+position = Vector2(1314, 686)
 
 [node name="HitBox" type="Area2D" parent="." unique_id=269650320 groups=["watergun"]]
 

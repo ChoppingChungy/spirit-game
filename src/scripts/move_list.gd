@@ -12,7 +12,6 @@ func choose_move(category,difficulty):
 		var weight = pow(1.0 - difference, 2)
 
 		move_weights.append(weight)
-		total_weight += weight
 
 	# Roll somewhere within the total weight
 	var roll = randf_range(0.0, total_weight)

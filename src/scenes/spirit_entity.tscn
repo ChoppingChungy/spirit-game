@@ -1,17 +1,19 @@
 [gd_scene format=3 uid="uid://co8xkftb3bsll"]
 
-[ext_resource type="Texture2D" uid="uid://dqepjox346mfx" path="res://scary-face-ghost-on-dark-background.png" id="1_g2pkk"]
+[ext_resource type="Texture2D" uid="uid://d3tpk1fmcx55j" path="res://Ghost.png" id="1_g2pkk"]
 
 [sub_resource type="GDScript" id="GDScript_t2nh6"]
 resource_name = "spirit_entity"
 script/source = "extends Node2D
 signal wet
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var collision: CollisionPolygon2D = $Area2D/CollisionPolygon2D
 
-@onready var collision_shape_2d: CollisionShape2D = $Sprite2D/Area2D/CollisionShape2D
+var spirit_name = \"pirate\"
 var speed = 500.0 # Base speed the ghost returns to
 var panic = 0.5 # How strongly pressure increases difficulty
 var accel_mult = 1.5 # How quickly speed returns to base speed
+var resize = 1
 
 var move_interval = 1 # base Average time between moves
 var move_timer = 0 #live timer the ghost uses
@@ -30,7 +32,16 @@ var radius = 15 # Distance ghost center stays from screen edge
 var current_pressure = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	movement_weight = ghost_db.ghosts[spirit_name][\"movement_weight\"]
+	teleport_weight = ghost_db.ghosts[spirit_name][\"teleport_weight\"]
+	special_weight = ghost_db.ghosts[spirit_name][\"special_weight\"]
+	base_difficulty = ghost_db.ghosts[spirit_name][\"difficulty\"]
+	speed = ghost_db.ghosts[spirit_name][\"speed\"]
+	panic = ghost_db.ghosts[spirit_name][\"panic\"]
+	accel_mult = ghost_db.ghosts[spirit_name][\"accel_mult\"]
+	move_interval = ghost_db.ghosts[spirit_name][\"movement_interval\"]
+	resize = ghost_db.ghosts[spirit_name][\"scale\"]
+	scale = Vector2(resize,resize)
 
 
 func choose_category():
@@ -155,23 +166,18 @@ func _on_fight_mode_pressure_changed(pressure: Variant) -> void:
 	current_pressure = pressure * panic
 "
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_64jkt"]
-size = Vector2(20, 60)
-
 [node name="SpiritEntity" type="Node2D" unique_id=355366846]
 z_index = 8
 script = SubResource("GDScript_t2nh6")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2059534226]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=830578273]
-z_index = 1
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_64jkt")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1981965381]
+position = Vector2(1, -236)
+polygon = PackedVector2Array(0, -1, 201, 108, 231, 202, 148, 321, -8, 451, -161, 308, -229, 207, -202, 116)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=783256592]
 position = Vector2(0, -1.5258789e-05)
-scale = Vector2(0.0375817, 0.15357968)
 texture = ExtResource("1_g2pkk")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
