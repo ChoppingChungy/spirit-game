@@ -124,6 +124,9 @@ func _on_drink_menu_poured() -> void:
 	mix_menu.set_button_visibility(true)
 	
 	if current_drink.base.size() == 3:
+		# Sets the cup sprite to look full.
+		mix_scene.set_drink_sprite(true)
+		
 		pass # Do something here to only allow mixing in the Mix menu.
 	
 	# Shows the scene switcher to allow the user to switch again.
@@ -150,6 +153,9 @@ func reset_drink() -> void:
 	mix_scene.cancel()
 	mix_menu.set_button_visibility(false)
 	mix_menu.reset()
+	
+	# Empties the drink in the mix scene.
+	mix_scene.set_drink_sprite(false)
 	
 	# Hides the topping menu if its showing.
 	topping_menu.hide()

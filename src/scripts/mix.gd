@@ -14,6 +14,8 @@ enum Drinks {
 	NONE, # Required as it's impossible to assign null to an enum-type var
 }
 
+@onready var cup: AnimatedSprite2D = %Cup
+
 var selected_drink: Drinks = Drinks.NONE
 
 func _on_drink_clicked(drink_type: Drinks) -> void:
@@ -47,3 +49,9 @@ func pour() -> Drinks:
 
 func cancel() -> void:
 	selected_drink = Drinks.NONE
+
+
+## Sets the fullness of the drink on the counter. If the cup is full, then we set
+## the cup to the full frame of the sprite frame, otherwise we set it to the empty one.
+func set_drink_sprite(full: bool) -> void:
+	cup.frame = 1 if full else 0

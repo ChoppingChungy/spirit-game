@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://drdv87ia7b7bn" path="res://src/resources/images/Simple_Ecto.png" id="4_244je"]
 [ext_resource type="Texture2D" uid="uid://wxxxtoaes1wa" path="res://src/resources/images/Ginger_Beer.png" id="4_ja6bk"]
 [ext_resource type="Texture2D" uid="uid://d3rjk6bslvb8x" path="res://src/resources/images/Cup.png" id="6_3jqxk"]
+[ext_resource type="Texture2D" uid="uid://67htwrjskknd" path="res://src/resources/images/Cup_Full.png" id="9_w2sh7"]
 
 [sub_resource type="Gradient" id="Gradient_qgsut"]
 offsets = PackedFloat32Array(1)
@@ -24,6 +25,20 @@ offsets = PackedFloat32Array(0, 0.16321243)
 gradient = SubResource("Gradient_5m66n")
 width = 203
 height = 369
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s7wsd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_3jqxk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_w2sh7")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Mix" type="Node2D" unique_id=1145318325]
 script = ExtResource("1_qgsut")
@@ -84,9 +99,10 @@ offset_bottom = 770.0
 scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("2_5m66n")
 
-[node name="Cup" type="Sprite2D" parent="." unique_id=760465978]
+[node name="Cup" type="AnimatedSprite2D" parent="." unique_id=1182569600]
+unique_name_in_owner = true
 position = Vector2(960, 778)
-texture = ExtResource("6_3jqxk")
+sprite_frames = SubResource("SpriteFrames_s7wsd")
 
 [connection signal="pressed" from="Vodka" to="." method="_on_drink_clicked" binds= [0]]
 [connection signal="pressed" from="Syrup" to="." method="_on_drink_clicked" binds= [1]]
