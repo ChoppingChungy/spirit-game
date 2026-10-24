@@ -69,6 +69,7 @@ func switch_scene():
 					
 				DrinkStation.TOPPING:
 					new_scene = TOPPING.instantiate() as Topping
+					topping_menu.show()
 					
 			scene_switcher.set_pointing_to("bar")
 			
@@ -77,6 +78,7 @@ func switch_scene():
 			scene_switcher.set_pointing_to("drinks")
 			
 			mix_menu.hide()
+			topping_menu.hide()
 	
 	world.add_child(new_scene)
 	current_scene = new_scene
