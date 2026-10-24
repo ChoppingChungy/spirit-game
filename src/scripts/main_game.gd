@@ -10,7 +10,7 @@ const TOPPING_SELECTED_MENU = preload("uid://v4kgp8fow7ge")
 @onready var scene_switcher: SceneSwitcher = $GUI/SceneSwitcher
 @onready var world: Node2D = %World
 @onready var mix_menu: MixMenu = $GUI/MixMenu as MixMenu
-@onready var topping_menu: ToppingMenu = $GUI/ToppingMenu
+@onready var topping_menu: ToppingMenu = $GUI/ToppingMenu as ToppingMenu
 
 var current_scene: Node2D
 
@@ -151,14 +151,17 @@ func _on_mix_menu_mix_pressed() -> void:
 	
 	current_drink_station = DrinkStation.TOPPING
 
+
 ## Handles the player trashing their drink in the mixing station.
 func _on_mix_menu_trash_pressed() -> void:
 	reset_drink()
+
 
 ## Handles the player serving the drink from the topping menu.
 func _on_topping_menu_serve_pressed() -> void:
 	topping_menu.hide()
 	topping_menu.reset()
+
 
 ## Handles the player selecting a topping in the topping station.
 func _on_topping_topping_selected(topping_type: String) -> void:

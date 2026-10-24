@@ -3,15 +3,10 @@
 [ext_resource type="Script" uid="uid://bv0adv0jofxgy" path="res://src/scripts/mix.gd" id="1_qgsut"]
 [ext_resource type="Texture2D" uid="uid://xnhfya1wsv54" path="res://src/resources/images/Red_Rum.png" id="2_5m66n"]
 [ext_resource type="Texture2D" uid="uid://blaetca0ydaha" path="res://src/resources/images/Vodka.png" id="2_dbwtw"]
+[ext_resource type="Texture2D" uid="uid://dmnrchdg87yyu" path="res://src/resources/images/Bar_Top_Empty.png" id="2_ja6bk"]
 [ext_resource type="Texture2D" uid="uid://x0wjmmcrx0xd" path="res://src/resources/images/Whisky.png" id="3_3jqxk"]
 [ext_resource type="Texture2D" uid="uid://wxxxtoaes1wa" path="res://src/resources/images/Ginger_Beer.png" id="4_ja6bk"]
-
-[sub_resource type="Gradient" id="Gradient_xo4u2"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.5, 0.24563241, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_xo4u2"]
-gradient = SubResource("Gradient_xo4u2")
+[ext_resource type="Texture2D" uid="uid://d3rjk6bslvb8x" path="res://src/resources/images/Cup.png" id="6_3jqxk"]
 
 [sub_resource type="Gradient" id="Gradient_qgsut"]
 offsets = PackedFloat32Array(1)
@@ -22,7 +17,7 @@ gradient = SubResource("Gradient_qgsut")
 width = 1920
 
 [sub_resource type="Gradient" id="Gradient_5m66n"]
-offsets = PackedFloat32Array(0, 0.2357513)
+offsets = PackedFloat32Array(0, 0.16321243)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_qgsut"]
 gradient = SubResource("Gradient_5m66n")
@@ -33,9 +28,7 @@ height = 369
 script = ExtResource("1_qgsut")
 
 [node name="Bar" type="Sprite2D" parent="." unique_id=71625712]
-position = Vector2(0, 888)
-scale = Vector2(7.5, 385.178)
-texture = SubResource("GradientTexture1D_xo4u2")
+texture = ExtResource("2_ja6bk")
 centered = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=24935197]
@@ -89,6 +82,10 @@ offset_right = 1986.0
 offset_bottom = 770.0
 scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("2_5m66n")
+
+[node name="Cup" type="Sprite2D" parent="." unique_id=760465978]
+position = Vector2(960, 778)
+texture = ExtResource("6_3jqxk")
 
 [connection signal="pressed" from="Vodka" to="." method="_on_drink_clicked" binds= [0]]
 [connection signal="pressed" from="Tequila" to="." method="_on_drink_clicked" binds= [1]]

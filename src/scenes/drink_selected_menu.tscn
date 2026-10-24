@@ -2,16 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dpo8resl6cwkm" path="res://src/scenes/tooltip.tscn" id="1_c1gg7"]
 [ext_resource type="Script" uid="uid://ubf7i7x2vl7p" path="res://src/scripts/drink_selected_menu.gd" id="1_fqaic"]
-
-[sub_resource type="Gradient" id="Gradient_c1gg7"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cfbgu"]
-gradient = SubResource("Gradient_c1gg7")
-
-[sub_resource type="Gradient" id="Gradient_fqaic"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_51o8a"]
-gradient = SubResource("Gradient_fqaic")
+[ext_resource type="Texture2D" uid="uid://bfff83gfdrpy3" path="res://src/resources/images/Pour_1.png" id="3_a4foc"]
+[ext_resource type="Texture2D" uid="uid://dudxcgt7380gd" path="res://src/resources/images/Cancel_1.png" id="4_a4foc"]
+[ext_resource type="Texture2D" uid="uid://hhctelspd7cf" path="res://src/resources/images/Pour_2.png" id="4_hljwg"]
+[ext_resource type="Texture2D" uid="uid://cs3y706fb1bab" path="res://src/resources/images/Cancel_2.png" id="6_a4foc"]
 
 [node name="DrinkSelectedMenu" type="Control" unique_id=1465867085]
 layout_mode = 3
@@ -31,12 +25,13 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -375.0
-offset_top = 117.0
-offset_right = -119.0
-offset_bottom = 338.0
+offset_left = -1197.0
+offset_top = 167.0
+offset_right = -937.0
+offset_bottom = 555.0
 grow_horizontal = 0
-texture_normal = SubResource("GradientTexture2D_cfbgu")
+texture_normal = ExtResource("3_a4foc")
+texture_hover = ExtResource("4_hljwg")
 stretch_mode = 0
 
 [node name="Cancel" type="TextureButton" parent="." unique_id=2108879615]
@@ -46,13 +41,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -363.0
-offset_top = -318.0
-offset_right = -119.0
-offset_bottom = -79.0
+offset_left = -1162.0
+offset_top = -1076.0
+offset_right = -957.0
+offset_bottom = -923.0
 grow_horizontal = 0
 grow_vertical = 0
-texture_normal = SubResource("GradientTexture2D_51o8a")
+texture_normal = ExtResource("4_a4foc")
+texture_hover = ExtResource("6_a4foc")
 stretch_mode = 0
 
 [connection signal="pressed" from="Pour" to="." method="_on_pour_pressed"]

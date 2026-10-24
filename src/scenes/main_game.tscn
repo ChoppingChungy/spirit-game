@@ -19,7 +19,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"default",
-"speed": 5.0
+"speed": 2.0
 }]
 
 [node name="MainGame" type="Node" unique_id=855186453]
@@ -32,7 +32,7 @@ unique_name_in_owner = true
 modulate = Color(0.46618086, 0.4661808, 0.4661808, 1)
 sprite_frames = SubResource("SpriteFrames_s7wsd")
 autoplay = "default"
-frame_progress = 0.5558101
+frame_progress = 0.8214603
 centered = false
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=1248560299]

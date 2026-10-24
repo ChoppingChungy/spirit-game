@@ -2,42 +2,17 @@
 
 [ext_resource type="Texture2D" uid="uid://dn3e0xx6flke7" path="res://src/resources/images/Bar_Top.png" id="1_d4wn3"]
 [ext_resource type="Script" uid="uid://bhx8056skxm5g" path="res://src/scripts/bar.gd" id="1_unsi2"]
-
-[sub_resource type="Gradient" id="Gradient_0cvp5"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_s7rlf"]
-gradient = SubResource("Gradient_0cvp5")
-
-[sub_resource type="Gradient" id="Gradient_d4wn3"]
-offsets = PackedFloat32Array(0.9879808, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_s7wsd"]
-gradient = SubResource("Gradient_d4wn3")
-fill = 1
-fill_from = Vector2(0.515625, 0.5017361)
-fill_to = Vector2(1, 0.5121528)
+[ext_resource type="Texture2D" uid="uid://c8pt4jstkgogc" path="res://src/resources/images/Pirate_Ghost.png" id="2_naoiu"]
 
 [node name="Bar" type="Node2D" unique_id=452952164]
 script = ExtResource("1_unsi2")
 
 [node name="Ghost" type="Sprite2D" parent="." unique_id=1475523166]
-position = Vector2(960, 490)
-scale = Vector2(1.8125, 806.5)
-texture = SubResource("GradientTexture1D_s7rlf")
+position = Vector2(960, 510)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_naoiu")
 
 [node name="Bar" type="Sprite2D" parent="." unique_id=1441951464]
 texture = ExtResource("1_d4wn3")
 centered = false
 offset = Vector2(0, 150)
-
-[node name="Eye" type="Sprite2D" parent="." unique_id=1595170375]
-position = Vector2(863, 298)
-scale = Vector2(1.53125, 1.53125)
-texture = SubResource("GradientTexture2D_s7wsd")
-
-[node name="Eye2" type="Sprite2D" parent="." unique_id=810219537]
-position = Vector2(1057, 298)
-scale = Vector2(1.53125, 1.53125)
-texture = SubResource("GradientTexture2D_s7wsd")

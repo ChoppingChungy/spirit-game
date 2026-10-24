@@ -1,9 +1,34 @@
 [gd_scene format=3 uid="uid://d0lr7g3kh3wtf"]
 
 [ext_resource type="Script" uid="uid://dagvxrp1hlit6" path="res://src/scripts/mix_menu.gd" id="1_n7lph"]
+[ext_resource type="Texture2D" uid="uid://duehk4go7k0o0" path="res://src/resources/images/Mix_1.png" id="2_hj8e6"]
+[ext_resource type="Texture2D" uid="uid://ckst8jmpkqx65" path="res://src/resources/images/Fill_Meter_0.png" id="2_rvr0b"]
+[ext_resource type="Texture2D" uid="uid://cpkd6p0j56f8f" path="res://src/resources/images/Fill_Meter_1.png" id="3_ck2fw"]
+[ext_resource type="Texture2D" uid="uid://cgdvch4n3d5xl" path="res://src/resources/images/Mix_2.png" id="3_lsk73"]
+[ext_resource type="Texture2D" uid="uid://sto5ag0sh0g1" path="res://src/resources/images/Trash_1.png" id="4_erhhm"]
+[ext_resource type="Texture2D" uid="uid://djmly4eu66kbu" path="res://src/resources/images/Fill_Meter_2.png" id="4_rlvjn"]
+[ext_resource type="Texture2D" uid="uid://b7p1bln6n8k8o" path="res://src/resources/images/Fill_Meter_3.png" id="5_bvs8q"]
+[ext_resource type="Texture2D" uid="uid://cf7k46viporrk" path="res://src/resources/images/Trash_2.png" id="5_vb05a"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7wsd"]
-bg_color = Color(0.85490197, 0, 0, 1)
+[sub_resource type="SpriteFrames" id="SpriteFrames_s7wsd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rvr0b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ck2fw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rlvjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bvs8q")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="MixMenu" type="Control" unique_id=1713630294]
 layout_mode = 3
@@ -15,59 +40,44 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_n7lph")
 
-[node name="Mix" type="Button" parent="." unique_id=2138752518]
+[node name="Mix" type="TextureButton" parent="." unique_id=529298809]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -97.5
-offset_top = -246.0
-offset_right = 97.5
-offset_bottom = -91.0
-grow_horizontal = 2
+offset_left = -386.0
+offset_top = -314.0
+offset_right = 3.0
+grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 107
-text = "Mix"
+texture_normal = ExtResource("2_hj8e6")
+texture_hover = ExtResource("3_lsk73")
 
-[node name="FillMeter" type="ProgressBar" parent="." unique_id=1135785560]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 146.0
-offset_top = -94.0
-offset_right = 192.0
-offset_bottom = 104.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-max_value = 3.0
-step = 1.0
-fill_mode = 3
-show_percentage = false
-
-[node name="Trash" type="Button" parent="." unique_id=944120998]
+[node name="Trash" type="TextureButton" parent="." unique_id=358403885]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 400.0
-offset_top = -246.0
-offset_right = 697.0
-offset_bottom = -91.0
+offset_left = -389.0
+offset_top = -562.0
+offset_bottom = -301.0
+grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 107
-theme_override_styles/normal = SubResource("StyleBoxFlat_s7wsd")
-text = "Trash"
+texture_normal = ExtResource("4_erhhm")
+texture_hover = ExtResource("5_vb05a")
+
+[node name="FillMeter" type="AnimatedSprite2D" parent="." unique_id=914058536]
+unique_name_in_owner = true
+position = Vector2(1198, 770)
+sprite_frames = SubResource("SpriteFrames_s7wsd")
 
 [connection signal="pressed" from="Mix" to="." method="_on_mix_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_trash_pressed"]

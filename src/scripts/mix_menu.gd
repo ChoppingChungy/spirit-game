@@ -4,12 +4,24 @@ extends Control
 signal mix_pressed
 signal trash_pressed
 
-@onready var fill_meter: ProgressBar = %FillMeter
-@onready var mix: Button = %Mix
-@onready var trash: Button = %Trash
+@onready var fill_meter: AnimatedSprite2D = %FillMeter
+@onready var mix: TextureButton = %Mix
+@onready var trash: TextureButton = %Trash
+
+const meter_height = 770
+
+func _ready() -> void:
+	loop_tween()
+
+
+func loop_tween() -> void:
+	await create_tween().tween_property(fill_meter, "position:y", meter_height + 10, 1).set_trans(Tween.TRANS_SINE).finished
+	await create_tween().tween_property(fill_meter, "position:y", meter_height - 10, 1).set_trans(Tween.TRANS_SINE).finished
+	loop_tween()
+
 
 func set_meter(value: int) -> void:
-	fill_meter.value = value
+	fill_meter.frame = value
 
 
 func set_button_visibility(showing: bool) -> void:
@@ -19,7 +31,7 @@ func set_button_visibility(showing: bool) -> void:
 
 
 func increment_meter() -> void:
-	fill_meter.value += 1
+	fill_meter.frame += 1
 
 func _on_mix_pressed() -> void:
 	mix_pressed.emit()
