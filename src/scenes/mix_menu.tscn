@@ -76,7 +76,7 @@ texture_hover = ExtResource("5_vb05a")
 
 [node name="FillMeter" type="AnimatedSprite2D" parent="." unique_id=914058536]
 unique_name_in_owner = true
-position = Vector2(1198, 770)
+position = Vector2(1198, 810)
 sprite_frames = SubResource("SpriteFrames_s7wsd")
 
 [connection signal="pressed" from="Mix" to="." method="_on_mix_pressed"]

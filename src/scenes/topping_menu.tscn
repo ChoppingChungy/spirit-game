@@ -47,5 +47,5 @@ theme_override_font_sizes/font_size = 107
 theme_override_styles/normal = SubResource("StyleBoxFlat_p7ilq")
 text = "Trash"
 
-[connection signal="pressed" from="Serve" to="." method="_on_place_pressed"]
+[connection signal="pressed" from="Serve" to="." method="_on_serve_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_trash_pressed"]

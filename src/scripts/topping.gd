@@ -26,13 +26,14 @@ func _on_topping_clicked(topping_type: Toppings) -> void:
 		_:
 			topping_selected.emit("topping")
 
+
 ## Tops the drink with the currently-selected topping.
 func top() -> Toppings:
 	var returned_topping = selected_topping
 	selected_topping = Toppings.NONE
 	return returned_topping
 
+
 ## Cancels the topping and returns to a no-topping state.
 func cancel() -> void:
 	selected_topping = Toppings.NONE
-	

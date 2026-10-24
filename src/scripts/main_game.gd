@@ -45,6 +45,8 @@ class Drink:
 
 var current_drink = Drink.new()
 
+var reputation := 0
+
 func _ready() -> void:
 	current_scene = BAR.instantiate()
 	world.add_child(current_scene)
@@ -102,6 +104,10 @@ func _on_mix_drink_selected(drink_type: String) -> void:
 	
 	# Sets the drink tooltip in the drink_menu.
 	drink_menu.set_tooltip(drink_type.capitalize(), "Default")
+	
+	# Hides the scene switcher so the player can't swap while selecting.
+	scene_switcher.hide()
+	mix_menu.set_button_visibility(false)
 
 
 func _on_drink_menu_poured() -> void:
@@ -113,28 +119,39 @@ func _on_drink_menu_poured() -> void:
 	
 	# Addes the poured drink into the list of bases
 	current_drink.base.append(poured_drink)
-
+	
 	# Shows the mix button by default, since pouring a unit implies that there is more than one unit in the drink.
 	mix_menu.set_button_visibility(true)
-
-
+	
 	if current_drink.base.size() == 3:
 		pass # Do something here to only allow mixing in the Mix menu.
+	
+	# Shows the scene switcher to allow the user to switch again.
+	scene_switcher.show()
+	mix_menu.set_button_visibility(true)
 
 
 func _on_drink_menu_canceled() -> void:
 	var mix_scene := current_scene as Mix
 	mix_scene.cancel()
+	
+	# Shows the trash/mix buttons ONLY IF there is at least one base.
+	# Without the base check, then the buttons will show up on cancel EVEN IF THERE IS NO BASE!
+	if not current_drink.base.is_empty():
+		mix_menu.set_button_visibility(true)
+	
+	# Shows the scene switcher to allow the user to switch again.
+	scene_switcher.show()
 
 
 ## Resets the drink if the user trashes it or finishes the current customer.
 func reset_drink() -> void:
-	var mix_scene = current_scene as Mix
+	var mix_scene := current_scene as Mix
 	mix_scene.cancel()
 	mix_menu.set_button_visibility(false)
 	mix_menu.reset()
 	
-	# If the topping menu is showing, it's now hidden.
+	# Hides the topping menu if its showing.
 	topping_menu.hide()
 	
 	current_drink = Drink.new()
@@ -161,8 +178,7 @@ func _on_mix_menu_trash_pressed() -> void:
 
 ## Handles the player serving the drink from the topping menu.
 func _on_topping_menu_serve_pressed() -> void:
-	topping_menu.hide()
-	topping_menu.reset()
+	_handle_serve()
 
 
 ## Handles the player selecting a topping in the topping station.
@@ -188,7 +204,7 @@ func _on_topping_menu_used() -> void:
 	
 	# Adds the used topping into the drink.
 	current_drink.topping = topping_used
-
+	
 	if current_drink.topping != ToppingType.NONE:
 		pass # Do something here to only allow mixing in the Mix menu.
 
@@ -218,3 +234,44 @@ func _on_topping_menu_trash_pressed() -> void:
 	
 	# Shows the mix menu, which has already been reset.
 	mix_menu.show()
+
+
+## Handles the logic for the player serving the drink to the customer.
+func _handle_serve() -> void:
+	# Debug
+	print_debug("Served!")
+	
+	# Swaps the scene back to the bar.
+	switch_scene()
+	
+	# Prevents the player from switching scenes.
+	scene_switcher.hide()
+	
+	# Checks whether the drink satisfies the order.
+	var is_satisfied = test_drink(current_drink)
+	
+	if is_satisfied:
+		# Improves the bar's reputation if the drink was good.
+		reputation += 1
+		
+		var bar_scene := current_scene as Bar
+		
+		current_drink_station = DrinkStation.MIX
+		
+		# REPLACE!!! We should be loading the new customer's PNG here.
+		await bar_scene.swap_customer(load("res://src/resources/images/Pirate_Ghost.png"))
+	else:
+		pass
+	
+	# Resets the current drink. SHOULD BE reset_drink() BUT THAT INCLUDES MIX SCENE BEHAVIOR!
+	current_drink = Drink.new()
+	
+	# Allows the user to switch scenes again.
+	scene_switcher.show()
+
+
+## Tests whether the drink meets the current customer's standards.
+func test_drink(drink: Drink) -> bool:
+	# TODO: Figure out the logic for a correct drink, simplest way would be to
+	# check if the drink matches exactly what the customer wanted.
+	return true

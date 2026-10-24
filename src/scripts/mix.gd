@@ -6,7 +6,7 @@ signal drink_selected(drink_type: String)
 
 enum Drinks {
 	VODKA,
-	TEQUILA,
+	SYRUP,
 	BRANDY,
 	WHISKEY,
 	GINGER,
@@ -27,8 +27,8 @@ func _on_drink_clicked(drink_type: Drinks) -> void:
 	match drink_type:
 		Drinks.VODKA:
 			drink_selected.emit("vodka")
-		Drinks.TEQUILA:
-			drink_selected.emit("tequila")
+		Drinks.SYRUP:
+			drink_selected.emit("syrup")
 		Drinks.BRANDY:
 			drink_selected.emit("brandy")
 		Drinks.WHISKEY:

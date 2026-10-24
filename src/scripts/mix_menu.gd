@@ -8,7 +8,7 @@ signal trash_pressed
 @onready var mix: TextureButton = %Mix
 @onready var trash: TextureButton = %Trash
 
-const meter_height = 770
+const meter_height = 810
 
 func _ready() -> void:
 	loop_tween()
@@ -27,11 +27,11 @@ func set_meter(value: int) -> void:
 func set_button_visibility(showing: bool) -> void:
 	mix.visible = showing
 	trash.visible = showing
-	
 
 
 func increment_meter() -> void:
 	fill_meter.frame += 1
+
 
 func _on_mix_pressed() -> void:
 	mix_pressed.emit()
